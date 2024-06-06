@@ -1,2 +1,2 @@
-# fontomas
-Fontomas project repository
+# Neural font generator
+Neural font generator repository
