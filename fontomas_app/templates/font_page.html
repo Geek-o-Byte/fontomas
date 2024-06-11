@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+@font-face {
+    font-family: '{{ font_info.name }}';
+    src: url('{{ font_info.url }}') format('truetype');
+}
+
+.custom-font {
+    font-family: '{{ font_info.name }}', sans-serif;
+}
+</style>
+
+<h1 style="text-align: center; font-size: 64px;" class="custom-font">{{ font_info.name }}</h1>
+<hr>
+<p class="">Style: {{ font_info.style }}</p>
+<p class="">Weight: {{ font_info.weight }}</p>
+<p class="">Creators: {{ font_info.creators | join(', ') }}</p>
+<a href="{{ font_info.url }}" download class="download-button">Download UFO</a>
+<a href="{{ font_info.url }}" download class="download-button">Download TTF</a>
+<a href="{{ font_info.url }}" download class="download-button">Download OTF</a>
+<a href="{{ font_info.url }}" download class="download-button">Download WOFF</a>
+<hr>
+<section class="font-characters custom-font">
+    <h2 class="section-h">Characters</h2>
+    <div class="language-toggle">
+        <button type="button" class="btn" onclick="showLanguage('english')">English</button>
+        <button type="button" class="btn" onclick="showLanguage('russian')">Russian</button>
+        <button type="button" class="btn" onclick="showLanguage('numbers')">Numbers</button>
+    </div>
+    <div id="english" class="char-set">
+        <table>
+            {% for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" %}
+            {% if loop.index0 % 9 == 0 %}
+            <tr>
+            {% endif %}
+            <td style="font-size: 48px;">{{ char }}</td>
+            {% if loop.index0 % 9 == 8 %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    <div id="russian" class="char-set">
+        <table>
+            {% for char in "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя" %}
+            {% if loop.index0 % 9 == 0 %}
+            <tr>
+            {% endif %}
+            <td style="font-size: 48px;">{{ char }}</td>
+            {% if loop.index0 % 9 == 8 %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    <div id="numbers" class="char-set">
+        <table>
+            {% for char in "0123456789" %}
+            {% if loop.index0 % 9 == 0 %}
+            <tr>
+            {% endif %}
+            <td style="font-size: 48px;">{{ char }}</td>
+            {% if loop.index0 % 9 == 8 %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</section>
+<hr>
+<section class="font-test-phrases">
+    <h2 class="section-h">Test Phrases</h2>
+    <div class="test-phr">
+        <div class="phr">
+            <h3>English</h3>
+            <p class="custom-font">The quick brown fox jumps over the lazy dog.</p>
+        </div>
+        <div class="phr">
+            <h3>Russian</h3>
+            <p class="custom-font">Съешь же ещё этих мягких французских булок, да выпей чаю.</p>
+        </div>
+    </div>
+</section>
+<hr>
+<section class="font-input">
+    <div class="input-block">
+        <h2 class="section-h">Input Text</h2>
+        <input type="range" id="font-size-slider" min="12" max="96" value="48" oninput="updateFontSize(this.value)">
+    </div>
+    <textarea id="user-input" rows="4" cols="50" style="font-size: 48px;"
+              class="custom-font"
+              placeholder="Съешь же ещё этих мягких французских булок, да выпей чаю."
+    ></textarea>
+<!--    <p id="output" style="font-size: 48px;" class="custom-font"></p>-->
+</section>
+<script>
+    function showLanguage(lang) {
+        document.querySelectorAll('.char-set').forEach(set => set.style.display = 'none');
+        document.getElementById(lang).style.display = 'block';
+    }
+
+    document.getElementById('user-input').addEventListener('input', function() {
+        document.getElementById('output').textContent = this.value;
+    });
+
+    function updateFontSize(size) {
+        document.getElementById('user-input').style.fontSize = size + 'px';
+        //document.getElementById('output').style.fontSize = size + 'px';
+    }
+
+    // Initialize to show English characters
+    showLanguage('english');
+</script>
+{% endblock %}

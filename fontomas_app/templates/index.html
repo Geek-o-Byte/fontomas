@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Fontomas project</h1>
+<div class="font-list">
+    {% for font in fonts %}
+    <div class="font-card" style="font-family: '{{ font }}', sans-serif;">
+        <a href="/font/{{ font }}" style="font-size: 24px;">{{ font }}</a>
+    </div>
+    {% endfor %}
+</div>
+<footer class="footer">
+    <p>Created by Max Maslov | 2024</p>
+</footer>
+{% endblock %}
